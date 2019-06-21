@@ -6,26 +6,20 @@ import java.util.Map;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
-import com.practice.domain.User;
+import com.practice.domain.Employee;
 
 @Component
-public class Processor implements ItemProcessor<User, User>{
+public class Processor implements ItemProcessor<Employee, Employee>{
 	
 	public static final Map<String, String> DEPT_NAMES = new HashMap<>();
 	
-	
-	public Processor() {
-		DEPT_NAMES.put("001", "Technology");
-		DEPT_NAMES.put("002", "OPerations");
-		DEPT_NAMES.put("003", "Accounts");
-	}
-
 	@Override
-	public User process(User item) throws Exception {
-		System.out.println(item);
-		item.setDept(DEPT_NAMES.get(item.getDept()));
-		System.out.println("After Processed \n"+item);
-		return item;
+	public Employee process(Employee employee) throws Exception {
+		System.out.println(employee);
+		employee.setEmailId(employee.getName()+"@gmail.com");
+		System.out.println("After Processing \n" + employee);
+		System.out.println("===========================================");
+		return employee;
 	}
 
 }

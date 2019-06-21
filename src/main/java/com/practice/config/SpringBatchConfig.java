@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-import com.practice.domain.User;
+import com.practice.domain.Employee;
 
 @Configuration
 @EnableBatchProcessing
@@ -28,10 +28,10 @@ public class SpringBatchConfig {
 
 	@Bean
 	public Job job(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-			ItemReader<User> itemReader, ItemProcessor<User, User> itemProcessor, ItemWriter<User> itemWriter) {
+			ItemReader<Employee> itemReader, ItemProcessor<Employee, Employee> itemProcessor, ItemWriter<Employee> itemWriter) {
 
 		Step step = stepBuilderFactory.get("ETL-File-Load")
-				.<User, User>chunk(100)
+				.<Employee, Employee>chunk(100)
 				.reader(itemReader)
 				.processor(itemProcessor)
 				.writer(itemWriter)
@@ -41,8 +41,8 @@ public class SpringBatchConfig {
 	}
 
 	@Bean
-	public FlatFileItemReader<User> flatFileItemReader(@Value("${input.file}") Resource resource){
-		FlatFileItemReader<User> itemReader = new FlatFileItemReader<>();
+	public FlatFileItemReader<Employee> flatFileItemReader(@Value("${input.file}") Resource resource){
+		FlatFileItemReader<Employee> itemReader = new FlatFileItemReader<>();
 		itemReader.setResource(resource);
 		itemReader.setName("CSV-Reader");
 		itemReader.setLinesToSkip(1);
@@ -51,15 +51,15 @@ public class SpringBatchConfig {
 	}
 
 	@Bean
-	public LineMapper<User> lineMapper() {
-		DefaultLineMapper<User> defaultLineMapper = new DefaultLineMapper<>();
+	public LineMapper<Employee> lineMapper() {
+		DefaultLineMapper<Employee> defaultLineMapper = new DefaultLineMapper<>();
 		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
 		lineTokenizer.setDelimiter(",");
 		lineTokenizer.setStrict(false);
-		lineTokenizer.setNames(new String[] {"id","name","dept","salary"});
+		lineTokenizer.setNames(new String[] {"id","name","salary"});
 		
-		BeanWrapperFieldSetMapper<User> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-		fieldSetMapper.setTargetType(User.class);
+		BeanWrapperFieldSetMapper<Employee> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+		fieldSetMapper.setTargetType(Employee.class);
 		
 		defaultLineMapper.setLineTokenizer(lineTokenizer);
 		defaultLineMapper.setFieldSetMapper(fieldSetMapper);

@@ -1,29 +1,19 @@
 package com.practice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+public class Employee {
 
-@Entity
-public class User {
-	
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", dept=" + dept + ", salary=" + salary + "]";
-	}
-
-	@Id
 	private Integer id;
 	private String name;
-	private String dept;
+	private String emailId;
 	private Integer salary;
 
-	public User() {
+	public Employee() {
 	}
 
-	public User(Integer id, String name, String dept, Integer salary) {
+	public Employee(Integer id, String name, String emailId, Integer salary) {
 		this.id = id;
 		this.name = name;
-		this.dept = dept;
+		this.emailId = emailId;
 		this.salary = salary;
 	}
 
@@ -43,20 +33,25 @@ public class User {
 		this.name = name;
 	}
 
-	public String getDept() {
-		return dept;
-	}
-
-	public void setDept(String dept) {
-		this.dept = dept;
-	}
-
 	public Integer getSalary() {
 		return salary;
 	}
 
 	public void setSalary(Integer salary) {
 		this.salary = salary;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", salary=" + salary + ", emailId=" + emailId + "]";
 	}
 
 }
